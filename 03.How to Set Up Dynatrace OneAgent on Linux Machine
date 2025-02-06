@@ -1,0 +1,120 @@
+**🚀 How to Set Up Dynatrace OneAgent on Linux Machine**
+
+**🔑 Step 1: Login to Dynatrace**
+
+**🔹 Login to your Dynatrace Account using your credentials.  
+🔹 On the Homepage, search for "Deploy OneAgent".**
+
+**💻 Step 2: Select Your Operating System**
+
+🔹 Choose the OS of your Virtual Machine (VM).  
+🔹 Example: If using **Ubuntu**, select **Linux OneAgent**.
+
+On Dynatrace OneAgent for Linux Screen , generate a new token for oneagent setup
+
+**🔑 Step 3: Generate OneAgent Token**
+
+🔹 In the **Dynatrace OneAgent for Linux** screen, generate a new token for OneAgent setup.  
+🔹 Choose the **installer type** (e.g., x86/64)
+
+**🛠️ Step 4: Choose Monitoring Mode**
+
+🔹 Select one of the following **Monitoring Modes**:  
+✅ **Full Stack** – Deep monitoring for applications & infrastructure.  
+✅ **Infrastructure** – Monitors system performance only.  
+✅ **Discovery** – Detects available processes without full monitoring.
+
+
+**📜 Step 5: Run Installation Commands**
+
+🔹 Copy the installer commands from Dynatrace and execute it as **Root user**.
+```bash
+wget -O Dynatrace-OneAgent.sh "&lt;installer_url&gt;"
+chmod +x Dynatrace-OneAgent.sh
+sudo ./Dynatrace-OneAgent.sh
+```
+
+As you can see OneAgent is successfully Installed on this instance.
+
+**✅ Step 6: Verify OneAgent Installation**
+
+🔹 Go back to the **Dynatrace Console** → Click **Show Deployment Status**.  
+🔹 If everything is correct, the instance will **appear as monitored**.
+
+As you can see here , Dynatrace is successfully connected with the host and started the monitoring.
+All though it is smooth installation, sometimes you might face some challenges on setting up OneAgent due to some firewall restrictions and instance limitation.
+
+**Common Dynatrace OneAgent Troubleshooting Steps and Issues**
+
+When deploying **Dynatrace OneAgent**, you might run into issues related to installation, connectivity, or monitoring. Here’s a list of common problems and how to troubleshoot them.
+
+**📌 OneAgent Installation Path**
+
+📍 **Location:** /opt/dynatrace/oneagent/agent
+
+**⚠️ Common Dynatrace OneAgent Troubleshooting Steps**
+
+**🌐 1. Connectivity Issues**
+
+❌ **Issue:** OneAgent cannot connect to the Dynatrace Server.  
+🔍 **Possible Causes:**  
+🔹 Network firewall restrictions.  
+🔹 Proxy settings misconfigured.  
+🔹 Incorrect installation URL.
+
+✅ **Troubleshooting Steps:**
+```bash
+\# Verify OneAgent can reach Dynatrace
+
+curl -v https://&lt;environment-id&gt;.live.dynatrace.com
+
+\# Check if required ports (443, 9999) are open
+
+sudo netstat -tulnp | grep -E '443|9999'
+```
+
+**🔄 2. OneAgent Service Not Running**
+
+**❌ Issue: OneAgent is installed but not running.  
+🔍 Possible Causes:  
+🔹 The service did not start after installation.  
+🔹 Port conflicts.  
+🔹 Systemd issues.**
+
+**✅ Troubleshooting Steps:**
+
+\# Check OneAgent service status
+```bash
+sudo systemctl status oneagent
+```
+\# Restart the OneAgent service
+```bash
+sudo systemctl restart oneagent
+```
+\# Enable OneAgent to start on boot
+```bash
+sudo systemctl enable oneagent
+```
+\# Check logs for errors
+```bash
+sudo journalctl -u oneagent --no-pager | tail -20
+```
+**🗑️ 3. Uninstalling OneAgent**
+
+❌ **Issue:** Need to remove OneAgent from a server.
+
+✅ **Solution:**
+
+\# Run the uninstall script
+```bash
+sudo /opt/dynatrace/oneagent/uninstall.sh
+```
+\# Verify removal
+```bash
+ls /opt/dynatrace/oneagent
+```
+\# If the directory still exists, remove it manually
+```bash
+sudo rm -rf /opt/dynatrace
+```
+These troubleshooting steps will help diagnose and resolve **common Dynatrace OneAgent issues** in real-world **SRE and DevOps** environments. 🚀 Let me know if you need further assistance! 🔥
