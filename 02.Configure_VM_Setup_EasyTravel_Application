@@ -5,11 +5,9 @@
 **Click Authorize**
 
 **Switch to root user**
-```bash
+
 sudo su
 **Update System Packages**
-```bash
 apt update -y
 **Install Git**
-```bash
 apt install git -y
